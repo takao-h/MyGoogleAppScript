@@ -2,18 +2,25 @@
 
 function fetchYoutubeData(){
   //JSONで情報の取得
+  // youtubeの動画URLV=よりも後についてるやつ
   var VIDEO_ID = "hoge";
+
+  // APIアクセストークン
   var API_KEY = "fugafuga";
+
+  // インサイト取得のための基本URL
   var BASE_URL = "https://www.googleapis.com/youtube/v3/videos?id=";
   var url =  BASE_URL + VIDEO_ID"&key=" + API_KEY + "&part=snippet,statistics&fields=items(id,snippet,statistics)";
+
+  // 結果をJsonで受けてパース
   var response = UrlFetchApp.fetch(url);
   var data = JSON.parse(response.getContentText());
-  return data;
 
+// 書き込み
   var sheet = SpreadsheetApp.getActive().getSheetByName('sheet1');
-  var likeRate = requestEvaluation().items[0].statistics.likeCount/requestEvaluation().items[0].statistics.viewCount*100;
-  var commentRate = requestEvaluation().items[0].statistics.commentCount/requestEvaluation().items[0].statistics.viewCount*100;
-  sheet.appendRow([currentdate(), requestEvaluation().items[0].statistics.viewCount, requestEvaluation().items[0].statistics.likeCount, requestEvaluation().items[0].statistics.commentCount, likeRate + "%", commentRate + "%"]);
+  var likeRate = data.items[0].statistics.likeCount/data.items[0].statistics.viewCount*100;
+  var commentRate = data.items[0].statistics.commentCount/data.items[0].statistics.viewCount*100;
+  sheet.appendRow([currentdate(), data.items[0].statistics.viewCount, data.items[0].statistics.likeCount, data.items[0].statistics.commentCount, likeRate + "%", commentRate + "%"]);
 
   Logger.log();
 }
