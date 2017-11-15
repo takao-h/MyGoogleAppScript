@@ -5,7 +5,7 @@ function fetchAppointmentSchedules() {
   // sheet name
   var SHEET_NAME = 'シート';
   // start clomun number
-  var RANGE = 2;
+  var RANGE = 1;
   // time format
   var FORMAT_TIME = 'yyyy/MM/dd';
   // get sheet info
